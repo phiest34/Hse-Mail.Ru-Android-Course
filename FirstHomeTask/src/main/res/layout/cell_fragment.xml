@@ -3,13 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cellFragment">
+    tools:context=".CellFragment">
+
+
+    <Button
+        android:id="@+id/containedButton"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addElement" />
 
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/item_layout"
         android:id="@+id/recycler_view_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp" />
+        android:layout_marginTop="120dp"
+        android:padding="12dp"
+        tools:listitem="@layout/item_layout" />
 
 </RelativeLayout>
