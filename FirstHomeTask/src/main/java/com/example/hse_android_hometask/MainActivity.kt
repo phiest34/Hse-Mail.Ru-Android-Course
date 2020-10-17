@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import objects.Cell
 
 class MainActivity : AppCompatActivity() {
+
     private var recyclerView: RecyclerView? = null
     private var gridLayoutManager: GridLayoutManager? = null
     private var data: ArrayList<Cell>? = null
     private var cellAdapter: CellAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     protected fun initializeData(): ArrayList<Cell> {
         val data = ArrayList<Cell>()
         for (position in 1..100) {
-            val number = position + 1
+            val number = position
             val color: Int
             if (number % 2 == 0) {
                 color = RED

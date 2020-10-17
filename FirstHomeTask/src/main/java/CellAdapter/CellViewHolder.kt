@@ -9,7 +9,4 @@ import objects.Cell
 class CellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var number = itemView.findViewById<TextView>(R.id.number)
-    fun bind(itemView: Cell) {
-
-    }
 }

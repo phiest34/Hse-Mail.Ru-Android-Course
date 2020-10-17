@@ -24,6 +24,7 @@ class CellAdapter(var context: Context, var arrayList: ArrayList<Cell>) :
     override fun onBindViewHolder(holder: CellViewHolder, position: Int) {
         val cell: Cell = arrayList[position]
         holder.number.text = cell.number.toString()
+        holder.number.setTextColor(cell.color)
     }
 
 
