@@ -1,4 +1,4 @@
-package com.example.hse_android_hometask
+package com.example.ui
 
 import org.junit.Test
 

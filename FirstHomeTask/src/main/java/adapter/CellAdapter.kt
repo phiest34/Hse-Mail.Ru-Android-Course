@@ -1,14 +1,14 @@
-package CellAdapter
+package adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hse_android_hometask.R
+import com.example.ui.R
 import objects.Cell
 
 
-class CellAdapter(var context: Context, var arrayList: ArrayList<Cell>) :
+class CellAdapter(var arrayList: ArrayList<Cell>) :
     RecyclerView.Adapter<CellViewHolder>() {
 
 

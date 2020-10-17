@@ -1,12 +1,11 @@
-package CellAdapter
+package adapter
 
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hse_android_hometask.R
-import objects.Cell
+import com.example.ui.R
 
 class CellViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    var number = itemView.findViewById<TextView>(R.id.number)
+    var number: TextView = itemView.findViewById(R.id.number)
 }
+
