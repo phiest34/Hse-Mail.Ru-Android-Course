@@ -16,6 +16,7 @@ class cellFragment : Fragment() {
     companion object {
         fun newInstance() = cellFragment()
     }
+    //fuckingKostyl
 
     private lateinit var viewModel: CellViewModel
 
