@@ -1,0 +1,2 @@
+include ':FirstHomeTask'
+rootProject.name = "hse-android-hometask"

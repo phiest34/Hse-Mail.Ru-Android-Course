@@ -1,0 +1,5 @@
+<resources>
+    <string name = "app_name">List of numbers</string>
+    <string name="number">100</string>
+    <string name="addElement">Push to add element at the end of list!</string>
+</resources>
