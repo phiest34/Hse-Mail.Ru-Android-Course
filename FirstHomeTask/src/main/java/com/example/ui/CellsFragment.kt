@@ -1,26 +1,39 @@
 package com.example.ui
 
 import adapter.CellAdapter
+import adapter.CellViewHolder
 import android.content.Context
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import objects.Cell
+import timber.log.Timber
+import kotlin.concurrent.fixedRateTimer
 
-class CellFragment : Fragment() {
+class CellsFragment : Fragment() {
+    interface IListener {
+        fun onCellClicked(cell: Cell)
+    }
+
+    protected var listener: IListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = requireActivity() as? IListener
+    }
+
     companion object {
-        fun newInstance() = CellFragment()
+        fun newInstance() = CellsFragment()
         fun getColor(number: Int): Int {
             return if (number % 2 == 0) {
                 Color.RED
@@ -56,23 +69,32 @@ class CellFragment : Fragment() {
             data = initializeData(count)
         }
         recyclerView = view?.findViewById(R.id.recycler_view_item)
-        gridLayoutManager = if (resources.configuration.orientation == SCREEN_ORIENTATION_PORTRAIT) {
-            GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
-        } else {
-            GridLayoutManager(activity, 4, LinearLayoutManager.VERTICAL, false)
-        }
+        gridLayoutManager =
+            if (resources.configuration.orientation == SCREEN_ORIENTATION_PORTRAIT) {
+                GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
+            } else {
+                GridLayoutManager(activity, 4, LinearLayoutManager.VERTICAL, false)
+            }
 
         recyclerView?.layoutManager = gridLayoutManager
         recyclerView?.setHasFixedSize(true)
-        cellAdapter = CellAdapter(data!!)
+        cellAdapter = CellAdapter(data!!, CellClickHandler())
         recyclerView?.adapter = cellAdapter
         val button: Button = view?.findViewById(R.id.containedButton) as Button
         button.setOnClickListener {
-            Toast.makeText(context, "Button clicked", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "The item was added", Toast.LENGTH_LONG).show()
             cellAdapter?.addCell()
             count++
             cellAdapter?.notifyDataSetChanged()
         }
+
+
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        listener = null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -87,6 +109,24 @@ class CellFragment : Fragment() {
             data.add(cell)
         }
         return data
+    }
+
+    inner class CellClickHandler : CellViewHolder.IListener {
+        override fun onCellClicked(position: Int) {
+            val cell = Cell(position, getColor(position))
+            listener?.onCellClicked(cell)
+
+            val numberFragment = NumberFragment()
+
+
+            val manager: FragmentManager = childFragmentManager
+
+            Timber.i("CALLBACK $position RETURNED ")
+            manager.beginTransaction()
+                .replace(R.id.recycler_view_item, numberFragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
 

@@ -7,7 +7,20 @@
 
     <fragment
         android:id="@+id/cellFragment"
-        android:name="com.example.ui.CellFragment"
+        android:name="com.example.ui.CellsFragment"
         android:label="cell_fragment"
-        tools:layout="@layout/cell_fragment" />
+        tools:layout="@layout/cell_fragment" >
+        <action
+            android:id="@+id/action_cellFragment_to_numberFragment"
+            app:destination="@id/numberFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/numberFragment"
+        android:name="com.example.ui.NumberFragment"
+        android:label="fragment_number"
+        tools:layout="@layout/fragment_number" >
+        <action
+            android:id="@+id/action_numberFragment_to_cellFragment"
+            app:destination="@id/cellFragment" />
+    </fragment>
 </navigation>
