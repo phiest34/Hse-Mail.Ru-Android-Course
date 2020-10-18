@@ -1,8 +1,12 @@
 package com.example.ui
 
 import adapter.CellAdapter
+import android.content.Context
+import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,8 +56,12 @@ class CellFragment : Fragment() {
             data = initializeData(count)
         }
         recyclerView = view?.findViewById(R.id.recycler_view_item)
-        gridLayoutManager =
+        gridLayoutManager = if (resources.configuration.orientation == SCREEN_ORIENTATION_PORTRAIT) {
             GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
+        } else {
+            GridLayoutManager(activity, 4, LinearLayoutManager.VERTICAL, false)
+        }
+
         recyclerView?.layoutManager = gridLayoutManager
         recyclerView?.setHasFixedSize(true)
         cellAdapter = CellAdapter(data!!)
@@ -83,3 +91,4 @@ class CellFragment : Fragment() {
 
 
 }
+
