@@ -129,7 +129,7 @@ class CellsFragment : Fragment() {
             Timber.i("CALLBACK $position RETURNED ")
             Toast.makeText(context, "Cell ${position + 1} clicked!", Toast.LENGTH_SHORT).show()
             manager.beginTransaction()
-                .replace(R.id.cell_fragment, numberFragment)
+                .replace(R.id.container, numberFragment)
                 .addToBackStack(null)
                 .commit()
         }
