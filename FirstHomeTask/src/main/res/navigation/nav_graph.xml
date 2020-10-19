@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/cellFragment">
+    app:startDestination="@id/cell_fragment">
 
     <fragment
-        android:id="@+id/cellFragment"
+        android:id="@+id/cell_fragment"
         android:name="com.example.ui.CellsFragment"
         android:label="cell_fragment"
         tools:layout="@layout/cell_fragment" >
@@ -21,6 +21,6 @@
         tools:layout="@layout/fragment_number" >
         <action
             android:id="@+id/action_numberFragment_to_cellFragment"
-            app:destination="@id/cellFragment" />
+            app:destination="@id/cell_fragment" />
     </fragment>
 </navigation>

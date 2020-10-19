@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import objects.Cell
 import timber.log.Timber
-import kotlin.concurrent.fixedRateTimer
 
 class CellsFragment : Fragment() {
     interface IListener {
@@ -49,6 +48,7 @@ class CellsFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.cell_fragment, container, false)
     }
+    private var cellFragmentView: Fragment? = null
 
     private var recyclerView: RecyclerView? = null
 
@@ -62,13 +62,20 @@ class CellsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState == null) {
             data = initializeData(count)
         } else {
             count = savedInstanceState.getInt("count")
             data = initializeData(count)
         }
-        recyclerView = view?.findViewById(R.id.recycler_view_item)
+        cellFragmentView = view.findViewById(R.id.cell_fragment)
+        recyclerView = view.findViewById(R.id.recycler_view_item)
         gridLayoutManager =
             if (resources.configuration.orientation == SCREEN_ORIENTATION_PORTRAIT) {
                 GridLayoutManager(activity, 3, LinearLayoutManager.VERTICAL, false)
@@ -80,15 +87,13 @@ class CellsFragment : Fragment() {
         recyclerView?.setHasFixedSize(true)
         cellAdapter = CellAdapter(data!!, CellClickHandler())
         recyclerView?.adapter = cellAdapter
-        val button: Button = view?.findViewById(R.id.containedButton) as Button
+        val button: Button = view.findViewById(R.id.containedButton) as Button
         button.setOnClickListener {
             Toast.makeText(context, "The item was added", Toast.LENGTH_LONG).show()
             cellAdapter?.addCell()
             count++
             cellAdapter?.notifyDataSetChanged()
         }
-
-
     }
 
     override fun onDetach() {
@@ -122,8 +127,9 @@ class CellsFragment : Fragment() {
             val manager: FragmentManager = childFragmentManager
 
             Timber.i("CALLBACK $position RETURNED ")
+            Toast.makeText(context, "Cell ${position + 1} clicked!", Toast.LENGTH_SHORT).show()
             manager.beginTransaction()
-                .replace(R.id.recycler_view_item, numberFragment)
+                .replace(R.id.cell_fragment, numberFragment)
                 .addToBackStack(null)
                 .commit()
         }
