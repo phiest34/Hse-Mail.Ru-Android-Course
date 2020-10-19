@@ -48,6 +48,7 @@ class CellsFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.cell_fragment, container, false)
     }
+
     private var cellFragmentView: Fragment? = null
 
     private var recyclerView: RecyclerView? = null
@@ -120,13 +121,11 @@ class CellsFragment : Fragment() {
         override fun onCellClicked(position: Int) {
             val cell = Cell(position, getColor(position))
             listener?.onCellClicked(cell)
-
             val numberFragment = NumberFragment()
-
-
+            val bundle = Bundle()
+            bundle.putInt("position", position)
+            numberFragment.arguments = bundle
             val manager: FragmentManager = childFragmentManager
-
-            Timber.i("CALLBACK $position RETURNED ")
             Toast.makeText(context, "Cell ${position + 1} clicked!", Toast.LENGTH_SHORT).show()
             manager.beginTransaction()
                 .replace(R.id.container, numberFragment)
