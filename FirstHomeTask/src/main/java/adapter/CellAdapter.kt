@@ -6,10 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ui.CellsFragment
 import com.example.ui.R
 import objects.Cell
-import timber.log.Timber
 
 
-class CellAdapter(var arrayList: ArrayList<Cell>, val listener: CellViewHolder.IListener) :
+class CellAdapter(private var arrayList: ArrayList<Cell>, val listener: CellViewHolder.IListener) :
     RecyclerView.Adapter<CellViewHolder>() {
 
 
@@ -25,7 +24,7 @@ class CellAdapter(var arrayList: ArrayList<Cell>, val listener: CellViewHolder.I
 
     override fun onBindViewHolder(holder: CellViewHolder, position: Int) {
         val cell: Cell = arrayList[position]
-        holder.bind(cell, position)
+        holder.bind(cell)
     }
 
     fun addCell() {

@@ -17,22 +17,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import objects.Cell
-import timber.log.Timber
 
 class CellsFragment : Fragment() {
-    interface IListener {
-        fun onCellClicked(cell: Cell)
-    }
-
-    protected var listener: IListener? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = requireActivity() as? IListener
-    }
-
     companion object {
-        fun newInstance() = CellsFragment()
         fun getColor(number: Int): Int {
             return if (number % 2 == 0) {
                 Color.RED
@@ -42,12 +29,11 @@ class CellsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.cell_fragment, container, false)
+    interface IListener {
+        fun onCellClicked(cell: Cell)
     }
+
+    private var listener: IListener? = null
 
     private var cellFragmentView: Fragment? = null
 
@@ -61,20 +47,32 @@ class CellsFragment : Fragment() {
 
     private var count: Int = 100
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = requireActivity() as? IListener
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.cell_fragment, container, false)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         if (savedInstanceState == null) {
             data = initializeData(count)
         } else {
             count = savedInstanceState.getInt("count")
             data = initializeData(count)
         }
+
         cellFragmentView = view.findViewById(R.id.cell_fragment)
         recyclerView = view.findViewById(R.id.recycler_view_item)
         gridLayoutManager =
@@ -88,6 +86,7 @@ class CellsFragment : Fragment() {
         recyclerView?.setHasFixedSize(true)
         cellAdapter = CellAdapter(data!!, CellClickHandler())
         recyclerView?.adapter = cellAdapter
+
         val button: Button = view.findViewById(R.id.containedButton) as Button
         button.setOnClickListener {
             Toast.makeText(context, "The item was added", Toast.LENGTH_LONG).show()
@@ -99,7 +98,6 @@ class CellsFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-
         listener = null
     }
 
@@ -136,4 +134,3 @@ class CellsFragment : Fragment() {
 
 
 }
-
