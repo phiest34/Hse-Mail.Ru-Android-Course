@@ -7,8 +7,6 @@ import com.example.ui.R
 import objects.Cell
 
 class CellViewHolder(itemView: View, private val listener: IListener?) : RecyclerView.ViewHolder(itemView) {
-    private val number: TextView = itemView.findViewById(R.id.number)
-
     interface IListener {
         fun onCellClicked(position: Int)
     }
@@ -18,7 +16,9 @@ class CellViewHolder(itemView: View, private val listener: IListener?) : Recycle
             listener?.onCellClicked(adapterPosition)
         }
     }
+
     fun bind(cell: Cell) {
+        val number: TextView = itemView.findViewById(R.id.number)
         number.text = cell.number.toString()
         number.setTextColor(cell.color)
     }

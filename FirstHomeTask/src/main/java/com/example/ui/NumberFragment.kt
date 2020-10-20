@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-
+import com.example.ui.CellsFragment.Companion.POSITION_KEY
 
 class NumberFragment : Fragment() {
     private var bigNumber: TextView? = null
@@ -23,11 +23,10 @@ class NumberFragment : Fragment() {
         bigNumber = view.findViewById(R.id.big_number)
 
         val bundle: Bundle? = arguments
-        val position: Int? = bundle?.getInt("position")
+        val position: Int? = (bundle?.getInt(POSITION_KEY))?.plus(1)
         if (position != null) {
-            bigNumber?.text = ((position + 1).toString())
-            bigNumber?.setTextColor(CellsFragment.getColor(position + 1))
+            bigNumber?.text = ((position).toString())
+            bigNumber?.setTextColor(CellsFragment.getColor(position))
         }
-
     }
 }

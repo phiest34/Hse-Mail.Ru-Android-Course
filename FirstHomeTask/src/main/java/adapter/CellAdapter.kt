@@ -8,7 +8,7 @@ import com.example.ui.R
 import objects.Cell
 
 
-class CellAdapter(private var arrayList: ArrayList<Cell>, val listener: CellViewHolder.IListener) :
+class CellAdapter(private var arrayList: ArrayList<Cell>, private val listener: CellViewHolder.IListener) :
     RecyclerView.Adapter<CellViewHolder>() {
 
 
@@ -28,7 +28,8 @@ class CellAdapter(private var arrayList: ArrayList<Cell>, val listener: CellView
     }
 
     fun addCell() {
-        val newCell = Cell(itemCount + 1, CellsFragment.getColor(itemCount + 1))
+        val size = itemCount + 1
+        val newCell = Cell(size, CellsFragment.getColor(size))
         arrayList.add(newCell)
     }
 }
