@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import objects.Cell
 import objects.Cell.Companion.DATA_SIZE_START_VALUE
 
-class CellsFragment : Fragment() {
+open class CellsFragment : Fragment() {
     companion object {
         const val COUNT_KEY = "count"
 
@@ -39,7 +39,7 @@ class CellsFragment : Fragment() {
 
 
     interface IListener {
-        fun onCellClicked(cell: Cell)
+        fun onCellClicked(position: Int)
     }
 
 
@@ -131,17 +131,7 @@ class CellsFragment : Fragment() {
 
     inner class CellClickHandler : CellViewHolder.IListener {
         override fun onCellClicked(position: Int) {
-            val cell = Cell(position, getColor(position))
-            listener?.onCellClicked(cell)
-            val numberFragment = NumberFragment()
-            val bundle = Bundle()
-            bundle.putInt(POSITION_KEY, position)
-            numberFragment.arguments = bundle
-            val manager: FragmentManager = childFragmentManager
-            manager.beginTransaction()
-                .replace(R.id.container, numberFragment)
-                .addToBackStack(null)
-                .commit()
+            listener?.onCellClicked(position)
         }
     }
 }
