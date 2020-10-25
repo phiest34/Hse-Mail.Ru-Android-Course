@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,16 +44,7 @@ open class CellsFragment : Fragment() {
 
     private var listener: IListener? = null
 
-    private var recyclerView: RecyclerView? = null
-
-    private var gridLayoutManager: GridLayoutManager? = null
-
-    private var data: ArrayList<Cell>? = null
-
-    private var cellAdapter: CellAdapter? = null
-
     private var count: Int = DATA_SIZE_START_VALUE
-
 
 
     override fun onAttach(context: Context) {
@@ -71,14 +61,9 @@ open class CellsFragment : Fragment() {
     }
 
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val data: ArrayList<Cell>?
         if (savedInstanceState == null) {
             data = initializeData(count)
         } else {
@@ -86,8 +71,8 @@ open class CellsFragment : Fragment() {
             data = initializeData(count)
         }
 
-        recyclerView = view.findViewById(R.id.recycler_view_item)
-        gridLayoutManager =
+        val recyclerView: RecyclerView? = view.findViewById(R.id.recycler_view_item)
+        val gridLayoutManager: GridLayoutManager =
             if (resources.configuration.orientation == SCREEN_ORIENTATION_PORTRAIT) {
                 GridLayoutManager(activity, PORTRAIT_ORIENTATION_CELLS, LinearLayoutManager.VERTICAL, false)
             } else {
@@ -96,14 +81,14 @@ open class CellsFragment : Fragment() {
 
         recyclerView?.layoutManager = gridLayoutManager
         recyclerView?.setHasFixedSize(true)
-        cellAdapter = CellAdapter(data!!, CellClickHandler())
+        val cellAdapter = CellAdapter(data, CellClickHandler())
         recyclerView?.adapter = cellAdapter
 
         val button: Button = view.findViewById(R.id.containedButton) as Button
         button.setOnClickListener {
-            cellAdapter?.addCell()
-            count++
-            cellAdapter?.notifyDataSetChanged()
+            cellAdapter.addCell()
+            count = cellAdapter.itemCount
+            cellAdapter.notifyDataSetChanged()
         }
     }
 
@@ -114,11 +99,11 @@ open class CellsFragment : Fragment() {
     }
 
 
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(COUNT_KEY, count)
     }
+
 
     private fun initializeData(count: Int): ArrayList<Cell> {
         val data = ArrayList<Cell>()
@@ -128,6 +113,7 @@ open class CellsFragment : Fragment() {
         }
         return data
     }
+
 
     inner class CellClickHandler : CellViewHolder.IListener {
         override fun onCellClicked(position: Int) {

@@ -12,7 +12,7 @@ open class MainActivity : AppCompatActivity(), CellsFragment.IListener {
     override fun onCellClicked(position: Int) {
         val numberFragment = NumberFragment()
         val bundle = Bundle()
-        bundle.putInt(CellsFragment.POSITION_KEY, position)
+        bundle.putInt(CellsFragment.POSITION_KEY, position + 1)
         numberFragment.arguments = bundle
         val manager: FragmentManager = supportFragmentManager
         manager.beginTransaction()
