@@ -2,15 +2,18 @@ package com.example.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
+
 
 open class MainActivity : AppCompatActivity(), CellsFragment.IListener {
+
+    private val manager = supportFragmentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         if (savedInstanceState == null) {
             val fragment = CellsFragment()
-            val manager = supportFragmentManager
             manager.beginTransaction()
                 .add(R.id.data, fragment)
                 .commit()
@@ -23,7 +26,6 @@ open class MainActivity : AppCompatActivity(), CellsFragment.IListener {
         val bundle = Bundle()
         bundle.putInt(CellsFragment.POSITION_KEY, position + 1)
         numberFragment.arguments = bundle
-        val manager: FragmentManager = supportFragmentManager
         manager.beginTransaction()
             .replace(R.id.data, numberFragment)
             .addToBackStack(null)
