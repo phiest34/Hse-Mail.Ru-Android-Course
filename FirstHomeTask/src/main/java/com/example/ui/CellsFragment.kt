@@ -52,6 +52,10 @@ open class CellsFragment : Fragment() {
         listener = requireActivity() as? IListener
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,4 +1,5 @@
 package com.example.ui
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
@@ -7,6 +8,14 @@ open class MainActivity : AppCompatActivity(), CellsFragment.IListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (savedInstanceState == null) {
+            val fragment = CellsFragment()
+            val manager = supportFragmentManager
+            manager.beginTransaction()
+                .add(R.id.data, fragment)
+                .commit()
+
+        }
     }
 
     override fun onCellClicked(position: Int) {
